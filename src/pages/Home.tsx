@@ -1,52 +1,100 @@
-import { VideoCard } from "@/components/VideoCard";
-import { BottomNav } from "@/components/BottomNav";
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { VideoCard } from '@/components/VideoCard';
+import { BottomNav } from '@/components/BottomNav';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { Loader2 } from 'lucide-react';
+
+interface Video {
+  id: string;
+  user_id: string;
+  title: string | null;
+  description: string | null;
+  video_url: string;
+  thumbnail_url: string | null;
+  views_count: number;
+  likes_count: number;
+  comments_count: number;
+  shares_count: number;
+  profiles: {
+    username: string;
+    avatar_url: string | null;
+  };
+}
 
 export default function Home() {
-  const videos = [
-    {
-      username: "أحمد_الفنان",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmed",
-      description: "أفضل لحظات اليوم 🔥 #ترند #استكشف #فن",
-      song: "الأغنية الرائجة - أحمد الفنان",
-      likes: 125000,
-      comments: 2300,
-      shares: 450,
-    },
-    {
-      username: "سارة_الإبداع",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sara",
-      description: "تعلم معي هذا الرقص الجديد 💃✨ #رقص #تعليم",
-      song: "موسيقى رائجة - DJ Mix",
-      likes: 89000,
-      comments: 1500,
-      shares: 320,
-    },
-    {
-      username: "محمد_الكوميدي",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mohamed",
-      description: "لما تحاول تطبخ لأول مرة 😂🔥 #كوميدي #مضحك",
-      song: "Original Sound - محمد الكوميدي",
-      likes: 256000,
-      comments: 5200,
-      shares: 1200,
-    },
-    {
-      username: "نور_السفر",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Nour",
-      description: "أجمل الأماكن في دبي 🌆✨ #سفر #دبي #استكشف",
-      song: "Travel Vibes - Mix 2024",
-      likes: 178000,
-      comments: 3400,
-      shares: 890,
-    },
-  ];
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth');
+    }
+  }, [user, authLoading, navigate]);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('videos')
+          .select(`
+            *,
+            profiles (
+              username,
+              avatar_url
+            )
+          `)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (error) throw error;
+        setVideos(data || []);
+      } catch (error) {
+        console.error('Error fetching videos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchVideos();
+    }
+  }, [user]);
+
+  if (authLoading || loading) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-background">
+        <Loader2 className="w-12 h-12 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory no-scrollbar">
-        {videos.map((video, index) => (
-          <VideoCard key={index} {...video} />
-        ))}
+        {videos.length === 0 ? (
+          <div className="h-screen flex items-center justify-center">
+            <p className="text-muted-foreground text-lg">لا توجد فيديوهات حالياً</p>
+          </div>
+        ) : (
+          videos.map((video) => (
+            <VideoCard
+              key={video.id}
+              videoId={video.id}
+              username={video.profiles?.username || 'مستخدم'}
+              avatar={video.profiles?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${video.id}`}
+              description={video.description || ''}
+              song="أغنية أصلية"
+              likes={video.likes_count}
+              comments={video.comments_count}
+              shares={video.shares_count}
+              videoUrl={video.video_url}
+            />
+          ))
+        )}
       </div>
       <BottomNav />
       <style>{`

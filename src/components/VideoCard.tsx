@@ -1,9 +1,13 @@
 import { Heart, MessageCircle, Share2, Music } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
 interface VideoCardProps {
+  videoId: string;
   username: string;
   avatar: string;
   description: string;
@@ -15,6 +19,7 @@ interface VideoCardProps {
 }
 
 export function VideoCard({
+  videoId,
   username,
   avatar,
   description,
@@ -22,23 +27,80 @@ export function VideoCard({
   likes,
   comments,
   shares,
+  videoUrl,
 }: VideoCardProps) {
+  const { user } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes);
+  const [loading, setLoading] = useState(false);
 
-  const handleLike = () => {
-    if (isLiked) {
-      setLikeCount(likeCount - 1);
-    } else {
-      setLikeCount(likeCount + 1);
+  useEffect(() => {
+    const checkIfLiked = async () => {
+      if (!user) return;
+
+      const { data } = await supabase
+        .from('likes')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('video_id', videoId)
+        .maybeSingle();
+
+      setIsLiked(!!data);
+    };
+
+    checkIfLiked();
+  }, [user, videoId]);
+
+  const handleLike = async () => {
+    if (!user || loading) return;
+
+    setLoading(true);
+    try {
+      if (isLiked) {
+        const { error } = await supabase
+          .from('likes')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('video_id', videoId);
+
+        if (error) throw error;
+        setIsLiked(false);
+        setLikeCount(prev => prev - 1);
+      } else {
+        const { error } = await supabase
+          .from('likes')
+          .insert({ user_id: user.id, video_id: videoId });
+
+        if (error) throw error;
+        setIsLiked(true);
+        setLikeCount(prev => prev + 1);
+      }
+    } catch (error: any) {
+      toast({
+        title: "خطأ",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-    setIsLiked(!isLiked);
   };
 
   return (
     <div className="relative h-screen w-full snap-start snap-always">
-      {/* Video Background - placeholder gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-pink-900/30 to-cyan-900/30" />
+      {/* Video Background */}
+      {videoUrl ? (
+        <video
+          src={videoUrl}
+          className="absolute inset-0 w-full h-full object-cover"
+          loop
+          playsInline
+          muted
+          autoPlay
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-pink-900/30 to-cyan-900/30" />
+      )}
 
       {/* Content Overlay */}
       <div className="absolute inset-0 flex">
@@ -78,6 +140,7 @@ export function VideoCard({
                   : "bg-background/20 backdrop-blur-sm text-white hover:bg-background/30"
               }`}
               onClick={handleLike}
+              disabled={loading}
             >
               <Heart className={`h-7 w-7 ${isLiked ? "fill-current" : ""}`} />
             </Button>
