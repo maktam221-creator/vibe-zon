@@ -1,8 +1,11 @@
 import { BottomNav } from "@/components/BottomNav";
 import { Button } from "@/components/ui/button";
 import { Video, Image as ImageIcon, Music, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
+  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen pb-20">
       {/* Header */}
@@ -29,7 +32,10 @@ export default function Create() {
             </div>
           </Button>
 
-          <Button className="w-full h-32 gradient-secondary border-0 text-white justify-start p-6 group hover:opacity-90">
+          <Button 
+            onClick={() => navigate('/upload-video')}
+            className="w-full h-32 gradient-secondary border-0 text-white justify-start p-6 group hover:opacity-90"
+          >
             <div className="flex items-center gap-4">
               <div className="p-4 bg-white/20 rounded-2xl group-hover:scale-110 transition-transform">
                 <ImageIcon className="h-10 w-10" />

@@ -7,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Home from "./pages/Home";
 import Discover from "./pages/Discover";
 import Create from "./pages/Create";
+import UploadVideo from "./pages/UploadVideo";
 import Notifications from "./pages/Notifications";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/discover" element={<Discover />} />
             <Route path="/create" element={<Create />} />
+            <Route path="/upload-video" element={<UploadVideo />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/auth" element={<Auth />} />
