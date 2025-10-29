@@ -105,7 +105,7 @@ const Auth = () => {
             >
               {loading ? (
                 <>
-                  <Loader2 className="ml-2 h-5 w-5 animate-spin" />
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   جارٍ {isSignIn ? 'تسجيل الدخول' : 'إنشاء الحساب'}...
                 </>
               ) : (

@@ -7,11 +7,11 @@ export function BottomNav() {
   const currentPath = location.pathname;
 
   const navItems = [
-    { icon: Home, label: "الرئيسية", path: "/" },
-    { icon: Compass, label: "اكتشف", path: "/discover" },
-    { icon: PlusSquare, label: "إنشاء", path: "/create" },
-    { icon: Bell, label: "الإشعارات", path: "/notifications" },
     { icon: User, label: "الملف الشخصي", path: "/profile" },
+    { icon: Bell, label: "الإشعارات", path: "/notifications" },
+    { icon: PlusSquare, label: "إنشاء", path: "/create" },
+    { icon: Compass, label: "اكتشف", path: "/discover" },
+    { icon: Home, label: "الرئيسية", path: "/" },
   ];
 
   return (

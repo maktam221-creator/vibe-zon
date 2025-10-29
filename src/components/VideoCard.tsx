@@ -104,30 +104,6 @@ export function VideoCard({
 
       {/* Content Overlay */}
       <div className="absolute inset-0 flex">
-        {/* Left side - User info and description */}
-        <div className="flex-1 flex flex-col justify-end p-4 pb-24">
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-12 w-12 border-2 border-white">
-                <AvatarImage src={avatar} alt={username} />
-                <AvatarFallback>{username[0]}</AvatarFallback>
-              </Avatar>
-              <span className="font-semibold text-white text-lg">@{username}</span>
-              <Button
-                size="sm"
-                className="h-8 px-6 gradient-primary border-0 text-white font-semibold hover:opacity-90"
-              >
-                متابعة
-              </Button>
-            </div>
-            <p className="text-white text-base leading-relaxed">{description}</p>
-            <div className="flex items-center gap-2 text-white/90">
-              <Music className="h-4 w-4" />
-              <span className="text-sm">{song}</span>
-            </div>
-          </div>
-        </div>
-
         {/* Right side - Action buttons */}
         <div className="flex flex-col items-center justify-end gap-6 p-4 pb-24">
           <div className="flex flex-col items-center gap-2">
@@ -174,6 +150,30 @@ export function VideoCard({
               <AvatarImage src={avatar} alt={username} />
               <AvatarFallback>{username[0]}</AvatarFallback>
             </Avatar>
+          </div>
+        </div>
+
+        {/* Left side - User info and description */}
+        <div className="flex-1 flex flex-col justify-end p-4 pb-24">
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-12 w-12 border-2 border-white">
+                <AvatarImage src={avatar} alt={username} />
+                <AvatarFallback>{username[0]}</AvatarFallback>
+              </Avatar>
+              <span className="font-semibold text-white text-lg">@{username}</span>
+              <Button
+                size="sm"
+                className="h-8 px-6 gradient-primary border-0 text-white font-semibold hover:opacity-90"
+              >
+                متابعة
+              </Button>
+            </div>
+            <p className="text-white text-base leading-relaxed">{description}</p>
+            <div className="flex items-center gap-2 text-white/90">
+              <Music className="h-4 w-4" />
+              <span className="text-sm">{song}</span>
+            </div>
           </div>
         </div>
       </div>

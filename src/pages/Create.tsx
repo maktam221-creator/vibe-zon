@@ -20,8 +20,8 @@ export default function Create() {
       <div className="p-6 space-y-8">
         {/* Main Create Options */}
         <div className="space-y-4">
-          <Button className="w-full h-32 gradient-primary border-0 text-white justify-start p-6 group hover:opacity-90">
-            <div className="flex items-center gap-4">
+          <Button className="w-full h-32 gradient-primary border-0 text-white justify-end p-6 group hover:opacity-90">
+            <div className="flex items-center gap-4 flex-row-reverse">
               <div className="p-4 bg-white/20 rounded-2xl group-hover:scale-110 transition-transform">
                 <Video className="h-10 w-10" />
               </div>
@@ -34,9 +34,9 @@ export default function Create() {
 
           <Button 
             onClick={() => navigate('/upload-video')}
-            className="w-full h-32 gradient-secondary border-0 text-white justify-start p-6 group hover:opacity-90"
+            className="w-full h-32 gradient-secondary border-0 text-white justify-end p-6 group hover:opacity-90"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-row-reverse">
               <div className="p-4 bg-white/20 rounded-2xl group-hover:scale-110 transition-transform">
                 <ImageIcon className="h-10 w-10" />
               </div>

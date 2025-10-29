@@ -101,6 +101,9 @@ export default function UploadVideo() {
       {/* Header */}
       <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border">
         <div className="p-4 flex items-center gap-4">
+          <h1 className="flex-1 text-2xl font-bold gradient-primary bg-clip-text text-transparent">
+            رفع فيديو
+          </h1>
           <Button
             variant="ghost"
             size="icon"
@@ -108,9 +111,6 @@ export default function UploadVideo() {
           >
             <ArrowRight className="h-6 w-6" />
           </Button>
-          <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-            رفع فيديو
-          </h1>
         </div>
       </div>
 

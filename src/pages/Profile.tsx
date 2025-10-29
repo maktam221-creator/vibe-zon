@@ -66,15 +66,15 @@ export default function Profile() {
       {/* Header */}
       <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border">
         <div className="flex items-center justify-between p-4">
-          <h1 className="text-xl font-bold">الملف الشخصي</h1>
           <div className="flex gap-2">
-            <Button size="icon" variant="ghost">
-              <Settings className="h-6 w-6" />
-            </Button>
             <Button size="icon" variant="ghost" onClick={signOut}>
               <LogOut className="h-6 w-6" />
             </Button>
+            <Button size="icon" variant="ghost">
+              <Settings className="h-6 w-6" />
+            </Button>
           </div>
+          <h1 className="text-xl font-bold">الملف الشخصي</h1>
         </div>
       </div>
 
@@ -117,11 +117,11 @@ export default function Profile() {
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <Button className="flex-1 gradient-primary border-0 text-white font-semibold h-11">
-            تعديل الملف الشخصي
-          </Button>
           <Button variant="outline" size="icon" className="h-11 w-11">
             <Bookmark className="h-5 w-5" />
+          </Button>
+          <Button className="flex-1 gradient-primary border-0 text-white font-semibold h-11">
+            تعديل الملف الشخصي
           </Button>
         </div>
       </div>

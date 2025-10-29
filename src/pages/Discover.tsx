@@ -28,10 +28,10 @@ export default function Discover() {
             اكتشف
           </h1>
           <div className="relative">
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               placeholder="ابحث عن فيديوهات، هاشتاجات، مستخدمين..."
-              className="pr-10 bg-muted border-0 h-12 rounded-xl"
+              className="pl-10 bg-muted border-0 h-12 rounded-xl"
             />
           </div>
         </div>
@@ -50,12 +50,12 @@ export default function Discover() {
                   className="p-4 cursor-pointer hover:bg-muted transition-smooth border-border bg-card"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg gradient-primary">
-                      <Icon className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="flex-1">
+                    <div className="flex-1 text-right">
                       <p className="font-semibold">#{item.tag}</p>
                       <p className="text-sm text-muted-foreground">{item.views} مشاهدة</p>
+                    </div>
+                    <div className="p-2 rounded-lg gradient-primary">
+                      <Icon className="h-5 w-5 text-white" />
                     </div>
                   </div>
                 </Card>
@@ -74,7 +74,7 @@ export default function Discover() {
                 className="relative aspect-[9/16] rounded-lg overflow-hidden cursor-pointer group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-pink-900/40 to-cyan-900/40 group-hover:opacity-80 transition-smooth" />
-                <div className="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-md">
+                <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm px-2 py-1 rounded-md">
                   <p className="text-xs font-semibold text-white">{video.views}</p>
                 </div>
               </div>
